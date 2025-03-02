@@ -1,5 +1,4 @@
-﻿using NUnit.Framework.Legacy;
-using ScientificCalculator.Tokenizer;
+﻿using ScientificCalculator.Tokenizer;
 
 namespace ScientificCalculator.Tests;
 
@@ -11,14 +10,22 @@ public class TokenizerTests
     {
     }
 
-    [TestCaseSource(nameof(ExpressionCases))]
-    public void ExpressionTest(string input, List<Token> expected)
+    [TestCaseSource(nameof(CorrectExpressionCases))]
+    public void CorrectExpressionTest(string input, List<Token> expected)
     {
-        var actual = Tokenizer.Tokenizer.Tokenize(input);
+        var actual = TokenizerMain.Tokenize(input);
         Assert.That(actual, Is.EqualTo(expected).AsCollection);
     }
 
-    private static readonly object[] ExpressionCases =
+    [TestCase("4 + 7 * sinus(2) - 1")]
+    [TestCase("4 + 7,3,2 * 2 - 1")]
+    public void IncorrectExpressionTest(string input)
+    {
+        var actual = TokenizerMain.Tokenize(input);
+        Assert.That(actual, Is.Null);
+    }
+
+    private static readonly object[] CorrectExpressionCases =
     [
         new object[] { "4 + 7 * 2 - 1", new List<Token>()
                                     {
@@ -43,6 +50,39 @@ public class TokenizerTests
                                         new SubstractionOperatorToken(),
                                         new NumberToken(1.67),
                                         new RightParenthesisToken()
+                                    } },
+        new object[] { "-4 + sin(25 * +4,3) - cos(tan(-45))", new List<Token>()
+                                    {
+                                        new UnaryMinusOperatorToken(),
+                                        new NumberToken(4.0),
+                                        new AdditionOperatorToken(),
+                                        new SineFunctionToken(),
+                                        new LeftParenthesisToken(),
+                                        new NumberToken(25.0),
+                                        new MultiplicationOperatorToken(),
+                                        new UnaryPlusOperatorToken(),
+                                        new NumberToken(4.3),
+                                        new RightParenthesisToken(),
+                                        new SubstractionOperatorToken(),
+                                        new CosineFunctionToken(),
+                                        new LeftParenthesisToken(),
+                                        new TangentFunctionToken(),
+                                        new LeftParenthesisToken(),
+                                        new UnaryMinusOperatorToken(),
+                                        new NumberToken(45.0),
+                                        new RightParenthesisToken(),
+                                        new RightParenthesisToken()
+                                    } },
+        new object[] { "   4+            7     *sin 2\t-\n1   ", new List<Token>()
+                                    {
+                                        new NumberToken(4.0),
+                                        new AdditionOperatorToken(),
+                                        new NumberToken(7.0),
+                                        new MultiplicationOperatorToken(),
+                                        new SineFunctionToken(),
+                                        new NumberToken(2.0),
+                                        new SubstractionOperatorToken(),
+                                        new NumberToken(1.0)
                                     } }
     ];
 }
