@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace ScientificCalculator.Tokenizer;
 
-public class Tokenizer
+public class TokenizerMain
 {
     public static List<Token>? Tokenize(string input)
     {
