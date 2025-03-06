@@ -6,6 +6,7 @@ public class PowerOperatorToken : BinaryOperatorToken
     {
         TextRepresentation = "^";
         Precedence = 3;
+        Associativity = Associativity.Right;
     }
     
     public override double Calculate(double operand1, double operand2)
