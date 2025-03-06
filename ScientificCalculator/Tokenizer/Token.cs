@@ -2,7 +2,7 @@ namespace ScientificCalculator.Tokenizer;
 
 public abstract class Token : IEquatable<Token>
 {
-    public  string TextRepresentation { get; set; } = String.Empty;
+    public string TextRepresentation { get; set; } = String.Empty;
 
     public bool Equals(Token? other)
     {
