@@ -1,6 +1,6 @@
 namespace ScientificCalculator.Tokenizer;
 
-public class LeftParenthesisToken : Token
+public class LeftParenthesisToken : OperatorToken
 {
     public LeftParenthesisToken()
     {
