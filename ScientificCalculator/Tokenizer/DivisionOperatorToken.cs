@@ -5,6 +5,7 @@ public class DivisionOperatorToken : BinaryOperatorToken
     public DivisionOperatorToken()
     {
         TextRepresentation = "/";
+        Precedence = 2;
     }
     
     public override double Calculate(double operand1, double operand2)

@@ -5,6 +5,7 @@ public class PowerOperatorToken : BinaryOperatorToken
     public PowerOperatorToken()
     {
         TextRepresentation = "^";
+        Precedence = 3;
     }
     
     public override double Calculate(double operand1, double operand2)
