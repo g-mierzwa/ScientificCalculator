@@ -4,7 +4,7 @@ namespace ScientificCalculator.Tokenizer;
 
 public class TokenizerMain
 {
-    public static List<Token>? Tokenize(string input)
+    public static Queue<Token>? Tokenize(string input)
     {
         var output = new List<Token>();
         int currentIndex = 0;
@@ -58,7 +58,7 @@ public class TokenizerMain
             return null;
         }
 
-        return output;
+        return new Queue<Token>(output);
     }
 
     private static Token TokenFromString(string textRepresentation)

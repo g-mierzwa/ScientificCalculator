@@ -4,15 +4,17 @@ namespace ScientificCalculator.Parser;
 
 public class ShuntingYardParser
 {
-    public static Queue<Token> Parse(List<Token>? input)
+    public static Queue<Token> Parse(Queue<Token>? input)
     {
         ArgumentNullException.ThrowIfNull(input);
 
         Queue<Token> output = new();
-        Stack<OperatorToken> operators = new();
+        Stack<Token> operators = new();
 
-        foreach (var token in input)
+        while (input.Count > 0)
         {
+            var token = input.Dequeue();
+
             if (token is NumberToken numberToken)
             {
                 output.Enqueue(numberToken);
@@ -56,8 +58,8 @@ public class ShuntingYardParser
                 while (
                     operators.Count > 0 &&
                     operators.Peek() is not LeftParenthesisToken &&
-                    (operators.Peek().Precedence > binaryOperatorToken.Precedence ||
-                    (operators.Peek().Precedence == binaryOperatorToken.Precedence &&
+                    ((operators.Peek() is BinaryOperatorToken t && t.Precedence > binaryOperatorToken.Precedence) ||
+                    (operators.Peek() is BinaryOperatorToken t1 && t1.Precedence == binaryOperatorToken.Precedence &&
                     binaryOperatorToken.Associativity == Associativity.Left))
                 )
                 {

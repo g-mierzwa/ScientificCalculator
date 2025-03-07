@@ -11,7 +11,7 @@ public class TokenizerTests
     }
 
     [TestCaseSource(nameof(CorrectExpressionCases))]
-    public void CorrectExpressionTest(string input, List<Token> expected)
+    public void CorrectExpressionTest(string input, Queue<Token>? expected)
     {
         var actual = TokenizerMain.Tokenize(input);
         Assert.That(actual, Is.EqualTo(expected).AsCollection);
@@ -27,8 +27,8 @@ public class TokenizerTests
 
     private static readonly object[] CorrectExpressionCases =
     [
-        new object[] { "4 + 7 * 2 - 1", new List<Token>()
-                                    {
+        new object[] { "4 + 7 * 2 - 1", new Queue<Token>(
+                                    [
                                         new NumberToken(4.0),
                                         new AdditionOperatorToken(),
                                         new NumberToken(7.0),
@@ -36,9 +36,9 @@ public class TokenizerTests
                                         new NumberToken(2.0),
                                         new SubstractionOperatorToken(),
                                         new NumberToken(1.0)
-                                    } },
-        new object[] { "(4,298 + 7,506) * (2,12121212 - 1,67)", new List<Token>()
-                                    {
+                                    ]) },
+        new object[] { "(4,298 + 7,506) * (2,12121212 - 1,67)", new Queue<Token>(
+                                    [
                                         new LeftParenthesisToken(),
                                         new NumberToken(4.298),
                                         new AdditionOperatorToken(),
@@ -50,9 +50,9 @@ public class TokenizerTests
                                         new SubstractionOperatorToken(),
                                         new NumberToken(1.67),
                                         new RightParenthesisToken()
-                                    } },
-        new object[] { "-4 + sin(25 * +4,3) - cos(tan(-45))", new List<Token>()
-                                    {
+                                    ]) },
+        new object[] { "-4 + sin(25 * +4,3) - cos(tan(-45))", new Queue<Token>(
+                                    [
                                         new UnaryMinusOperatorToken(),
                                         new NumberToken(4.0),
                                         new AdditionOperatorToken(),
@@ -72,9 +72,9 @@ public class TokenizerTests
                                         new NumberToken(45.0),
                                         new RightParenthesisToken(),
                                         new RightParenthesisToken()
-                                    } },
-        new object[] { "   4+            7     *sin 2\t-\n1   ", new List<Token>()
-                                    {
+                                    ]) },
+        new object[] { "   4+            7     *sin 2\t-\n1   ", new Queue<Token>(
+                                    [
                                         new NumberToken(4.0),
                                         new AdditionOperatorToken(),
                                         new NumberToken(7.0),
@@ -83,6 +83,6 @@ public class TokenizerTests
                                         new NumberToken(2.0),
                                         new SubstractionOperatorToken(),
                                         new NumberToken(1.0)
-                                    } }
+                                    ]) }
     ];
 }
