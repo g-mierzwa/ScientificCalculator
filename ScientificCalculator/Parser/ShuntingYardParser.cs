@@ -4,7 +4,7 @@ namespace ScientificCalculator.Parser;
 
 public class ShuntingYardParser
 {
-    public static List<Token> Parse(List<Token>? input)
+    public static Queue<Token> Parse(List<Token>? input)
     {
         ArgumentNullException.ThrowIfNull(input);
 
@@ -51,19 +51,19 @@ public class ShuntingYardParser
                     output.Enqueue(operators.Pop());
                 }
             }
-            else if (token is OperatorToken operatorToken)
+            else if (token is BinaryOperatorToken binaryOperatorToken)
             {
                 while (
                     operators.Count > 0 &&
                     operators.Peek() is not LeftParenthesisToken &&
-                    (operators.Peek().Precedence > operatorToken.Precedence ||
-                    (operators.Peek().Precedence == operatorToken.Precedence &&
-                    operatorToken.Associativity == Associativity.Left))
+                    (operators.Peek().Precedence > binaryOperatorToken.Precedence ||
+                    (operators.Peek().Precedence == binaryOperatorToken.Precedence &&
+                    binaryOperatorToken.Associativity == Associativity.Left))
                 )
                 {
                     output.Enqueue(operators.Pop());
                 }
-                operators.Push(operatorToken);
+                operators.Push(binaryOperatorToken);
             }
             else
             {
@@ -81,10 +81,10 @@ public class ShuntingYardParser
             output.Enqueue(operators.Pop());
         }
 
-        return output.ToList();
+        return output;
     }
 
-    public static List<Token> Parse(string input)
+    public static Queue<Token> Parse(string input)
     {
         return Parse(TokenizerMain.Tokenize(input));
     }
