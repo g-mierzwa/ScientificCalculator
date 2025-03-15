@@ -38,17 +38,17 @@ public class ShuntingYardParser
                     output.Enqueue(operators.Pop());
                     if (operators.Count == 0)
                     {
-                        throw new Exception("Mismatched parentheses");
+                        throw new ArgumentException("Mismatched parentheses");
                     }
                 }
                 // discard left parenthesis from the top of the stack
                 operators.Pop();
 
-                if (operators.Peek() is FunctionToken functionToken1)
+                if (operators.Count > 0 && operators.Peek() is FunctionToken functionToken1)
                 {
                     output.Enqueue(operators.Pop());
                 }
-                else if (operators.Peek() is UnaryOperatorToken unaryOperatorToken1)
+                else if (operators.Count > 0 && operators.Peek() is UnaryOperatorToken unaryOperatorToken1)
                 {
                     output.Enqueue(operators.Pop());
                 }
@@ -58,7 +58,7 @@ public class ShuntingYardParser
                 while (
                     operators.Count > 0 &&
                     operators.Peek() is not LeftParenthesisToken &&
-                    ((operators.Peek() is BinaryOperatorToken t && t.Precedence > binaryOperatorToken.Precedence) ||
+                    ((operators.Peek() is OperatorToken t && t.Precedence > binaryOperatorToken.Precedence) ||
                     (operators.Peek() is BinaryOperatorToken t1 && t1.Precedence == binaryOperatorToken.Precedence &&
                     binaryOperatorToken.Associativity == Associativity.Left))
                 )
@@ -69,7 +69,7 @@ public class ShuntingYardParser
             }
             else
             {
-                throw new Exception("Unknown token");
+                throw new ArgumentException("Unknown token");
             }
         }
 
@@ -77,7 +77,7 @@ public class ShuntingYardParser
         {
             if (operators.Peek() is LeftParenthesisToken)
             {
-                throw new Exception("Mismatched parentheses");
+                throw new ArgumentException("Mismatched parentheses");
             }
 
             output.Enqueue(operators.Pop());

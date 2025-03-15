@@ -9,8 +9,8 @@ public class AdditionOperatorToken : BinaryOperatorToken
         Associativity = Associativity.Left;
     }
     
-    public override double Calculate(double operand1, double operand2)
+    public override NumberToken Calculate(NumberToken operand1, NumberToken operand2)
     {
-        return operand1 + operand2;
+        return new NumberToken(operand1.Value + operand2.Value);
     }
 }

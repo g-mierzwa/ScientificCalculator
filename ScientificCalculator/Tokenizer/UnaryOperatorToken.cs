@@ -2,5 +2,5 @@ namespace ScientificCalculator.Tokenizer;
 
 public abstract class UnaryOperatorToken : OperatorToken
 {
-    public abstract double Calculate(double operand);
+    public abstract NumberToken Calculate(NumberToken operand);
 }

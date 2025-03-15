@@ -5,10 +5,11 @@ public class TangentFunctionToken : FunctionToken
     public TangentFunctionToken()
     {
         TextRepresentation = "tan";
+        Precedence = 3;
     }
     
-    public override double Calculate(double input)
+    public override NumberToken Calculate(NumberToken input)
     {
-        return Math.Tan(input);
+        return new NumberToken(Math.Tan(input.Value));
     }
 }

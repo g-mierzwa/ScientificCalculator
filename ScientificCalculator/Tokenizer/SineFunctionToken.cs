@@ -5,10 +5,11 @@ public class SineFunctionToken : FunctionToken
     public SineFunctionToken()
     {
         TextRepresentation = "sin";
+        Precedence = 3;
     }
     
-    public override double Calculate(double input)
+    public override NumberToken Calculate(NumberToken input)
     {
-        return Math.Sin(input);
+        return new NumberToken(Math.Sin(input.Value));
     }
 }

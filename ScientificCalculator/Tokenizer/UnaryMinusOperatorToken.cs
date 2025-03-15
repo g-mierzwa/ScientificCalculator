@@ -5,10 +5,11 @@ public class UnaryMinusOperatorToken : UnaryOperatorToken
     public UnaryMinusOperatorToken()
     {
         TextRepresentation = "u-";
+        Precedence = 3;
     }
     
-    public override double Calculate(double operand)
+    public override NumberToken Calculate(NumberToken operand)
     {
-        return -operand;
+        return new NumberToken(-operand.Value);
     }
 }
