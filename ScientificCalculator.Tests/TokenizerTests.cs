@@ -83,6 +83,16 @@ public class TokenizerTests
                                         new NumberToken(2.0),
                                         new SubstractionOperatorToken(),
                                         new NumberToken(1.0)
-                                    ]) }
+                                    ]) },
+        new object[] { "2^3/2^2", new Queue<Token>(
+                        [
+                            new NumberToken(2.0),
+                            new PowerOperatorToken(),
+                            new NumberToken(3.0),
+                            new DivisionOperatorToken(),
+                            new NumberToken(2.0),
+                            new PowerOperatorToken(),
+                            new NumberToken(2.0)
+                        ]) }
     ];
 }

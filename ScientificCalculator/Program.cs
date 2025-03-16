@@ -2,7 +2,7 @@
 using ScientificCalculator.Parser;
 using ScientificCalculator.Evaluator;
 
-string expression = "(4,298 + 7,506) * (2,12121212 - 1,67)";
+string expression = "2 ^ 3 / 2 ^ 2";
 var tokens = TokenizerMain.Tokenize(expression);
 
 Console.WriteLine(expression);

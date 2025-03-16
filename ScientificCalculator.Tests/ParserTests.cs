@@ -141,6 +141,27 @@ public class ParserTests
                             new AdditionOperatorToken(),
                             new NumberToken(1.0),
                             new SubstractionOperatorToken()
+                        ]) },
+        // 2 ^ 3 / 2 ^ 2 => 2 3 ^ 2 2 ^ /
+        new object[] { new Queue<Token>(
+                        [
+                            new NumberToken(2.0),
+                            new PowerOperatorToken(),
+                            new NumberToken(3.0),
+                            new DivisionOperatorToken(),
+                            new NumberToken(2.0),
+                            new PowerOperatorToken(),
+                            new NumberToken(2.0)
+                        ]),
+                        new Queue<Token>(
+                        [
+                            new NumberToken(2.0),
+                            new NumberToken(3.0),
+                            new PowerOperatorToken(),
+                            new NumberToken(2.0),
+                            new NumberToken(2.0),
+                            new PowerOperatorToken(),
+                            new DivisionOperatorToken()
                         ]) }
     ];
 }
