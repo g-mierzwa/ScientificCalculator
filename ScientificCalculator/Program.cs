@@ -11,17 +11,29 @@ if (string.IsNullOrWhiteSpace(expression))
     Console.WriteLine(expression);
 }
 
-var tokens = TokenizerMain.Tokenize(expression);
+try
+{
+    var tokens = TokenizerMain.Tokenize(expression);
 
-Console.WriteLine("Tokens:");
-Console.WriteLine(tokens is not null ? string.Join(", ", tokens) : "Tokenizer error");
+    Console.WriteLine("Tokens:");
+    Console.Write("[");
+    Console.Write(tokens is not null ? string.Join("] [", tokens) : "Tokenizer error");
+    Console.WriteLine("]");
 
-var rpn = ShuntingYardParser.Parse(tokens);
+    var rpn = ShuntingYardParser.Parse(tokens);
 
-Console.WriteLine("Tokens in RPN:");
-Console.WriteLine(rpn is not null ? string.Join(", ", rpn) : "Parser error");
+    Console.WriteLine("Tokens in RPN:");
+    Console.Write("[");
+    Console.Write(rpn is not null ? string.Join("] [", rpn) : "Parser error");
+    Console.WriteLine("]");
 
-Console.WriteLine($"Value = {RpnEvaluator.Evaluate(rpn)}");
+    Console.WriteLine($"Value = {RpnEvaluator.Evaluate(rpn)}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+    return;
+}
 
 static string GetRandomExpression()
 {
