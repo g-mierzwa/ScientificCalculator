@@ -11,6 +11,8 @@ public class DivisionOperatorToken : BinaryOperatorToken
     
     public override NumberToken Calculate(NumberToken operand1, NumberToken operand2)
     {
+        ArgumentOutOfRangeException.ThrowIfZero(operand2.Value);
+
         return new NumberToken(operand1.Value / operand2.Value);
     }
 }
